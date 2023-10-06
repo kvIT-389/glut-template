@@ -1,5 +1,16 @@
+/**
+ * \file point.h
+ * \brief Contains different variants of point structures.
+ */
+
 #ifndef POINT_H_INCLUDED_
 #define POINT_H_INCLUDED_
+
+/* Include headers */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 
 /**
@@ -19,4 +30,8 @@ typedef struct point2df {
 } point2df_t;
 
 
-#endif  /* POINT_H_INCLUDED_ */
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* POINT_H_INCLUDED_ */

@@ -1,8 +1,16 @@
+/**
+ * \file vector.h
+ * \brief Contains different variants of vector structures.
+ */
+
 #ifndef VECTOR_H_INCLUDED_
 #define VECTOR_H_INCLUDED_
 
-
 #include "geometry/point.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 
 /**
@@ -16,4 +24,8 @@ typedef point2d_t vector2d_t;
 typedef point2df_t vector2df_t;
 
 
-#endif  /* VECTOR_H_INCLUDED_ */
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* VECTOR_H_INCLUDED_ */

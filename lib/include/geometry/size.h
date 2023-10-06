@@ -1,5 +1,16 @@
+/**
+ * \file size.h
+ * \brief Contains different variants of size structures.
+ */
+
 #ifndef SIZE_H_INCLUDED_
 #define SIZE_H_INCLUDED_
+
+/* Include headers */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 
 /**
@@ -25,4 +36,8 @@ typedef struct size2df {
 } size2df_t;
 
 
-#endif  /* SIZE_H_INCLUDED_ */
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* SIZE_H_INCLUDED_ */
