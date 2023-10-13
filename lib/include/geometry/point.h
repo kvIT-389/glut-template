@@ -6,7 +6,7 @@
 #ifndef POINT_H_INCLUDED_
 #define POINT_H_INCLUDED_
 
-/* Include headers */
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,8 +17,8 @@ extern "C" {
  * \brief 2-dimensional point with integer components.
  */
 typedef struct point2d {
-  int x;
-  int y;
+  int32_t x;
+  int32_t y;
 } point2d_t;
 
 /**

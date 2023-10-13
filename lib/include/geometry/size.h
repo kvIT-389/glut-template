@@ -6,7 +6,7 @@
 #ifndef SIZE_H_INCLUDED_
 #define SIZE_H_INCLUDED_
 
-/* Include headers */
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,10 +18,10 @@ extern "C" {
  */
 typedef struct size2d {
   /* Width (horizontal) component. */
-  int w;
+  int32_t w;
 
   /* Height (vertical) component. */
-  int h;
+  int32_t h;
 } size2d_t;
 
 /**
