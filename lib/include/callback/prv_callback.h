@@ -1,0 +1,60 @@
+/**
+ * \file prv_callback.h
+ * \brief Contains private functions needed for internal
+ *        implementation of callbacks adding mechanism.
+ */
+
+#ifndef PRV_CALLBACK_H_INCLUDED_
+#define PRV_CALLBACK_H_INCLUDED_
+
+#include "ccollections/list.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+/**
+ * \brief Initiates callbacks for the current window.
+ * 
+ * \note This function called during `window__create(...)` call
+ *       from `window.h` header, so you should not call it
+ *       anywhere else.
+ */
+void init_callbacks(void);
+
+
+/**
+ * \brief Callback code enumeration.
+ */
+typedef enum callback_code {
+  DISPLAY_CALLBACK,
+  RESIZE_CALLBACK,
+} callback_code_t;
+
+
+/**
+ * \brief Get callbacks list of the current window
+ *        of the specific type.
+ * 
+ * \param callback_code \ref `callback_code_t` member.
+ * \return List of specific callbacks of the current window
+ *         if it exists, `NULL` otherwise.
+ */
+list_t *get_callbacks(callback_code_t callback_code);
+
+
+/**
+ * \brief Wrapper callback functions which call specific
+ *        callbacks of the current window.
+ */
+
+void display_wrapper(void);
+void reshape_wrapper(int width, int height);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* PRV_CALLBACK_H_INCLUDED_ */

@@ -16,6 +16,8 @@
 #include "geometry/size.h"
 #include "geometry/point.h"
 
+#include "callback/prv_callback.h"
+
 
 window_t *mainwindow;
 
@@ -44,13 +46,19 @@ window_t *window__create(
 
     window->id = glutCreateWindow(title);
     window->size = size;
-    window->callbacks = vector__create(1);
+    window->callbacks = vector__create(2);
+
+    if (windows == NULL) {
+        windows = vector__create(0);
+    }
 
     vector__set(windows, window->id, window);
 
     for (int i = 0; i < window->callbacks->size; ++i) {
         vector__set(window->callbacks, i, list__create());
     }
+
+    init_callbacks();
 
     return window;
 }

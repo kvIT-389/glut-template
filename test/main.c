@@ -3,9 +3,6 @@
 #include "gui/window.h"
 
 
-void display(void) {}
-
-
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(
@@ -21,7 +18,6 @@ int main(int argc, char **argv) {
         (point2d_t){200, 200}
     );
 
-    glutDisplayFunc(display);
     glutMainLoop();
 
     return 0;
