@@ -15,45 +15,27 @@
 
 
 void add_display_callback(display_callback_fn callback) {
-    list__add(
-        get_callbacks(DISPLAY_CALLBACK),
-        callback
-    );
+    add_callback(callback, DISPLAY_CALLBACK);
 }
 
 void add_resize_callback(resize_callback_fn callback) {
-    list__add(
-        get_callbacks(RESIZE_CALLBACK),
-        callback
-    );
+    add_callback(callback, RESIZE_CALLBACK);
 }
 
 void add_mouse_down_callback(mouse_callback_fn callback) {
-    list__add(
-        get_callbacks(MOUSE_DOWN_CALLBACK),
-        callback
-    );
+    add_callback(callback, MOUSE_DOWN_CALLBACK);
 }
 
 void add_mouse_up_callback(mouse_callback_fn callback) {
-    list__add(
-        get_callbacks(MOUSE_UP_CALLBACK),
-        callback
-    );
+    add_callback(callback, MOUSE_UP_CALLBACK);
 }
 
 void add_mouse_move_callback(motion_callback_fn callback) {
-    list__add(
-        get_callbacks(MOTION_CALLBACK),
-        callback
-    );
+    add_callback(callback, MOUSE_MOVE_CALLBACK);
 }
 
 void add_passive_mouse_move_callback(motion_callback_fn callback) {
-    list__add(
-        get_callbacks(PASSIVE_MOTION_CALLBACK),
-        callback
-    );
+    add_callback(callback, MOUSE_PASSIVE_MOVE_CALLBACK);
 }
 
 
@@ -72,6 +54,10 @@ list_t *get_callbacks(callback_code_t callback_code) {
         get_current_window()->callbacks,
         callback_code
     );
+}
+
+void add_callback(void *callback, callback_code_t callback_code) {
+    list__add(get_callbacks(callback_code), callback);
 }
 
 
@@ -141,7 +127,7 @@ void motion_wrapper(int x, int y) {
     motion_callback_fn callback;
 
     iterator = list__get_iterator(
-        get_callbacks(MOTION_CALLBACK)
+        get_callbacks(MOUSE_MOVE_CALLBACK)
     );
 
     callback = list_iterator__current(&iterator);
@@ -160,7 +146,7 @@ void passive_motion_wrapper(int x, int y) {
     motion_callback_fn callback;
 
     iterator = list__get_iterator(
-        get_callbacks(PASSIVE_MOTION_CALLBACK)
+        get_callbacks(MOUSE_PASSIVE_MOVE_CALLBACK)
     );
 
     callback = list_iterator__current(&iterator);

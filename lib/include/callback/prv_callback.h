@@ -30,8 +30,8 @@ typedef enum callback_code {
   RESIZE_CALLBACK,
   MOUSE_DOWN_CALLBACK,
   MOUSE_UP_CALLBACK,
-  MOTION_CALLBACK,
-  PASSIVE_MOTION_CALLBACK,
+  MOUSE_MOVE_CALLBACK,
+  MOUSE_PASSIVE_MOVE_CALLBACK,
 } callback_code_t;
 
 
@@ -54,6 +54,14 @@ void init_callbacks(void);
  *         if it exists, `NULL` otherwise.
  */
 list_t *get_callbacks(callback_code_t callback_code);
+
+/**
+ * \brief Add current window callback of the specified type.
+ * 
+ * \param callback callback function to add.
+ * \param callback_code \ref `callback_code_t` member.
+ */
+void add_callback(void *callback, callback_code_t callback_code);
 
 
 /**
