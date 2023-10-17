@@ -79,3 +79,15 @@ void reshape_wrapper(int width, int height) {
         callback = list_iterator__next(&iterator);
     }
 }
+
+
+void update_size(size2d_t size) {
+    get_current_window()->size = size;
+
+    glViewport(0, 0, size.w, size.h);
+}
+
+void clear_frame(void) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+}

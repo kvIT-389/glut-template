@@ -9,6 +9,8 @@
 
 #include "ccollections/list.h"
 
+#include "geometry/size.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -51,6 +53,19 @@ list_t *get_callbacks(callback_code_t callback_code);
 
 void display_wrapper(void);
 void reshape_wrapper(int width, int height);
+
+
+/**
+ * \brief Display callback which clears screen and
+ *        resets previous applied transformations.
+ */
+void clear_frame(void);
+
+/**
+ * \brief Resize callback which updates size of current
+ *        window and OpenGL viewport.
+ */
+void update_size(size2d_t size);
 
 
 #ifdef __cplusplus

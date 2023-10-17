@@ -16,6 +16,7 @@
 #include "geometry/size.h"
 #include "geometry/point.h"
 
+#include "callback/callback.h"
 #include "callback/prv_callback.h"
 
 
@@ -59,6 +60,9 @@ window_t *window__create(
     }
 
     init_callbacks();
+
+    add_display_callback(clear_frame);
+    add_resize_callback(update_size);
 
     return window;
 }
