@@ -19,7 +19,7 @@ extern "C" {
 /**
  * \brief Number of different callbacks.
  */
-#define CALLBACK_TYPES_NUMBER 2
+#define CALLBACK_TYPES_NUMBER 6
 
 
 /**
@@ -28,6 +28,10 @@ extern "C" {
 typedef enum callback_code {
   DISPLAY_CALLBACK,
   RESIZE_CALLBACK,
+  MOUSE_DOWN_CALLBACK,
+  MOUSE_UP_CALLBACK,
+  MOTION_CALLBACK,
+  PASSIVE_MOTION_CALLBACK,
 } callback_code_t;
 
 
@@ -59,6 +63,10 @@ list_t *get_callbacks(callback_code_t callback_code);
 
 void display_wrapper(void);
 void reshape_wrapper(int width, int height);
+
+void mouse_wrapper(int button, int state, int x, int y);
+void motion_wrapper(int x, int y);
+void passive_motion_wrapper(int x, int y);
 
 
 /**

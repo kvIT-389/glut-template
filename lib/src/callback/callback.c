@@ -28,10 +28,42 @@ void add_resize_callback(resize_callback_fn callback) {
     );
 }
 
+void add_mouse_down_callback(mouse_callback_fn callback) {
+    list__add(
+        get_callbacks(MOUSE_DOWN_CALLBACK),
+        callback
+    );
+}
+
+void add_mouse_up_callback(mouse_callback_fn callback) {
+    list__add(
+        get_callbacks(MOUSE_UP_CALLBACK),
+        callback
+    );
+}
+
+void add_mouse_move_callback(motion_callback_fn callback) {
+    list__add(
+        get_callbacks(MOTION_CALLBACK),
+        callback
+    );
+}
+
+void add_passive_mouse_move_callback(motion_callback_fn callback) {
+    list__add(
+        get_callbacks(PASSIVE_MOTION_CALLBACK),
+        callback
+    );
+}
+
 
 void init_callbacks(void) {
     glutDisplayFunc(display_wrapper);
     glutReshapeFunc(reshape_wrapper);
+
+    glutMouseFunc(mouse_wrapper);
+    glutMotionFunc(motion_wrapper);
+    glutPassiveMotionFunc(passive_motion_wrapper);
 }
 
 
@@ -74,6 +106,68 @@ void reshape_wrapper(int width, int height) {
         callback((size2d_t){
             .w = width,
             .h = height
+        });
+
+        callback = list_iterator__next(&iterator);
+    }
+}
+
+void mouse_wrapper(int button, int state, int x, int y) {
+    list_iterator_t iterator;
+    mouse_callback_fn callback;
+
+    iterator = list__get_iterator(
+        get_callbacks(state == GLUT_DOWN ?
+                      MOUSE_DOWN_CALLBACK :
+                      MOUSE_UP_CALLBACK)
+    );
+
+    callback = list_iterator__current(&iterator);
+    while (!list_iterator__ended(&iterator)) {
+        callback(
+            (mouse_button_code_t)(button),
+            (point2d_t){
+                .x = x,
+                .y = y
+            }
+        );
+
+        callback = list_iterator__next(&iterator);
+    }
+}
+
+void motion_wrapper(int x, int y) {
+    list_iterator_t iterator;
+    motion_callback_fn callback;
+
+    iterator = list__get_iterator(
+        get_callbacks(MOTION_CALLBACK)
+    );
+
+    callback = list_iterator__current(&iterator);
+    while (!list_iterator__ended(&iterator)) {
+        callback((point2d_t){
+            .x = x,
+            .y = y
+        });
+
+        callback = list_iterator__next(&iterator);
+    }
+}
+
+void passive_motion_wrapper(int x, int y) {
+    list_iterator_t iterator;
+    motion_callback_fn callback;
+
+    iterator = list__get_iterator(
+        get_callbacks(PASSIVE_MOTION_CALLBACK)
+    );
+
+    callback = list_iterator__current(&iterator);
+    while (!list_iterator__ended(&iterator)) {
+        callback((point2d_t){
+            .x = x,
+            .y = y
         });
 
         callback = list_iterator__next(&iterator);

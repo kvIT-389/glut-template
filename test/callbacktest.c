@@ -25,6 +25,34 @@ void print_size(size2d_t size) {
     );
 }
 
+void print_mouse_down_coords(mouse_button_code_t button, point2d_t point) {
+    printf(
+        "Mouse down with %d button at (%d; %d)\n\033[1A\r\033[K",
+        button, point.x, point.y
+    );
+}
+
+void print_mouse_up_coords(mouse_button_code_t button, point2d_t point) {
+    printf(
+        "Mouse up with %d button at (%d; %d)\n\033[1A\r\033[K",
+        button, point.x, point.y
+    );
+}
+
+void print_mouse_move_coords(point2d_t point) {
+    printf(
+        "Mouse move to (%d; %d)\n\033[1A\r\033[K",
+        point.x, point.y
+    );
+}
+
+void print_passive_mouse_move_coords(point2d_t point) {
+    printf(
+        "Mouse passive move to (%d; %d)\n\033[1A\r\033[K",
+        point.x, point.y
+    );
+}
+
 
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
@@ -43,6 +71,12 @@ int main(int argc, char **argv) {
 
     add_display_callback(draw);
     add_resize_callback(print_size);
+
+    add_mouse_down_callback(print_mouse_down_coords);
+    add_mouse_up_callback(print_mouse_up_coords);
+
+    add_mouse_move_callback(print_mouse_move_coords);
+    add_passive_mouse_move_callback(print_passive_mouse_move_coords);
 
     glutMainLoop();
 
