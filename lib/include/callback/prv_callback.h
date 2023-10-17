@@ -19,7 +19,7 @@ extern "C" {
 /**
  * \brief Number of different callbacks.
  */
-#define CALLBACK_TYPES_NUMBER 6
+#define CALLBACK_TYPES_NUMBER 10
 
 
 /**
@@ -32,6 +32,10 @@ typedef enum callback_code {
   MOUSE_UP_CALLBACK,
   MOUSE_MOVE_CALLBACK,
   MOUSE_PASSIVE_MOVE_CALLBACK,
+  KEYBOARD_DOWN_CALLBACK,
+  KEYBOARD_UP_CALLBACK,
+  SPECIAL_KEYBOARD_DOWN_CALLBACK,
+  SPECIAL_KEYBOARD_UP_CALLBACK,
 } callback_code_t;
 
 
@@ -75,6 +79,12 @@ void reshape_wrapper(int width, int height);
 void mouse_wrapper(int button, int state, int x, int y);
 void motion_wrapper(int x, int y);
 void passive_motion_wrapper(int x, int y);
+
+void keyboard_wrapper(unsigned char key, int x, int y);
+void keyboard_up_wrapper(unsigned char key, int x, int y);
+
+void special_wrapper(int key, int x, int y);
+void special_up_wrapper(int key, int x, int y);
 
 
 /**

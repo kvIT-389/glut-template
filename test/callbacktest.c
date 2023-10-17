@@ -53,6 +53,54 @@ void print_passive_mouse_move_coords(point2d_t point) {
     );
 }
 
+void print_key_down(uint8_t key, point2d_t point) {
+    printf(
+        "Key %c pressed at (%d; %d)\n\033[1A\r\033[K",
+        key, point.x, point.y
+    );
+}
+
+void print_key_up(uint8_t key, point2d_t point) {
+    printf(
+        "Key %c released at (%d; %d)\n\033[1A\r\033[K",
+        key, point.x, point.y
+    );
+}
+
+const char special_keys_names[9][9] = {
+    "Left", "Up", "Right", "Down",
+    "PageUp", "PageDown", "Home", "End",
+    "Insert"
+};
+
+void print_special_key_down(special_key_code_t key, point2d_t point) {
+    if (key < 12) {
+        printf(
+            "F%d key pressed at (%d; %d)\n\033[1A\r\033[K",
+            key + 1, point.x, point.y
+        );
+    } else {
+        printf(
+            "%s key pressed at (%d; %d)\n\033[1A\r\033[K",
+            special_keys_names[key - KEY_LEFT], point.x, point.y
+        );
+    }
+}
+
+void print_special_key_up(special_key_code_t key, point2d_t point) {
+    if (key < 12) {
+        printf(
+            "F%d key released at (%d; %d)\n\033[1A\r\033[K",
+            key + 1, point.x, point.y
+        );
+    } else {
+        printf(
+            "%s key released at (%d; %d)\n\033[1A\r\033[K",
+            special_keys_names[key - KEY_LEFT], point.x, point.y
+        );
+    }
+}
+
 
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
@@ -77,6 +125,12 @@ int main(int argc, char **argv) {
 
     add_mouse_move_callback(print_mouse_move_coords);
     add_passive_mouse_move_callback(print_passive_mouse_move_coords);
+
+    add_keyboard_down_callback(print_key_down);
+    add_keyboard_up_callback(print_key_up);
+
+    add_special_keyboard_down_callback(print_special_key_down);
+    add_special_keyboard_up_callback(print_special_key_up);
 
     glutMainLoop();
 

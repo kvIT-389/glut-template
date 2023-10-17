@@ -14,28 +14,64 @@
 #include "gui/window.h"
 
 
-void add_display_callback(display_callback_fn callback) {
+void add_display_callback(
+    display_callback_fn callback
+) {
     add_callback(callback, DISPLAY_CALLBACK);
 }
 
-void add_resize_callback(resize_callback_fn callback) {
+void add_resize_callback(
+    resize_callback_fn callback
+) {
     add_callback(callback, RESIZE_CALLBACK);
 }
 
-void add_mouse_down_callback(mouse_callback_fn callback) {
+void add_mouse_down_callback(
+    mouse_callback_fn callback
+) {
     add_callback(callback, MOUSE_DOWN_CALLBACK);
 }
 
-void add_mouse_up_callback(mouse_callback_fn callback) {
+void add_mouse_up_callback(
+    mouse_callback_fn callback
+) {
     add_callback(callback, MOUSE_UP_CALLBACK);
 }
 
-void add_mouse_move_callback(motion_callback_fn callback) {
+void add_mouse_move_callback(
+    motion_callback_fn callback
+) {
     add_callback(callback, MOUSE_MOVE_CALLBACK);
 }
 
-void add_passive_mouse_move_callback(motion_callback_fn callback) {
+void add_passive_mouse_move_callback(
+    motion_callback_fn callback
+) {
     add_callback(callback, MOUSE_PASSIVE_MOVE_CALLBACK);
+}
+
+void add_keyboard_down_callback(
+    keyboard_callback_fn callback
+) {
+    add_callback(callback, KEYBOARD_DOWN_CALLBACK);
+}
+
+void add_keyboard_up_callback(
+    keyboard_callback_fn callback
+) {
+    add_callback(callback, KEYBOARD_UP_CALLBACK);
+}
+
+void add_special_keyboard_down_callback(
+  special_keyboard_callback_fn callback
+) {
+    add_callback(callback, SPECIAL_KEYBOARD_DOWN_CALLBACK);
+}
+
+void add_special_keyboard_up_callback(
+  special_keyboard_callback_fn callback
+) {
+    add_callback(callback, SPECIAL_KEYBOARD_UP_CALLBACK);
 }
 
 
@@ -46,6 +82,12 @@ void init_callbacks(void) {
     glutMouseFunc(mouse_wrapper);
     glutMotionFunc(motion_wrapper);
     glutPassiveMotionFunc(passive_motion_wrapper);
+
+    glutKeyboardFunc(keyboard_wrapper);
+    glutKeyboardUpFunc(keyboard_up_wrapper);
+
+    glutSpecialFunc(special_wrapper);
+    glutSpecialUpFunc(special_up_wrapper);
 }
 
 
@@ -155,6 +197,94 @@ void passive_motion_wrapper(int x, int y) {
             .x = x,
             .y = y
         });
+
+        callback = list_iterator__next(&iterator);
+    }
+}
+
+void keyboard_wrapper(unsigned char key, int x, int y) {
+    list_iterator_t iterator;
+    keyboard_callback_fn callback;
+
+    iterator = list__get_iterator(
+        get_callbacks(KEYBOARD_DOWN_CALLBACK)
+    );
+
+    callback = list_iterator__current(&iterator);
+    while (!list_iterator__ended(&iterator)) {
+        callback(
+            key,
+            (point2d_t){
+                .x = x,
+                .y = y
+            }
+        );
+
+        callback = list_iterator__next(&iterator);
+    }
+}
+
+void keyboard_up_wrapper(unsigned char key, int x, int y) {
+    list_iterator_t iterator;
+    keyboard_callback_fn callback;
+
+    iterator = list__get_iterator(
+        get_callbacks(KEYBOARD_UP_CALLBACK)
+    );
+
+    callback = list_iterator__current(&iterator);
+    while (!list_iterator__ended(&iterator)) {
+        callback(
+            key,
+            (point2d_t){
+                .x = x,
+                .y = y
+            }
+        );
+
+        callback = list_iterator__next(&iterator);
+    }
+}
+
+void special_wrapper(int key, int x, int y) {
+    list_iterator_t iterator;
+    special_keyboard_callback_fn callback;
+
+    iterator = list__get_iterator(
+        get_callbacks(SPECIAL_KEYBOARD_DOWN_CALLBACK)
+    );
+
+    callback = list_iterator__current(&iterator);
+    while (!list_iterator__ended(&iterator)) {
+        callback(
+            (special_key_code_t)(key),
+            (point2d_t){
+                .x = x,
+                .y = y
+            }
+        );
+
+        callback = list_iterator__next(&iterator);
+    }
+}
+
+void special_up_wrapper(int key, int x, int y) {
+    list_iterator_t iterator;
+    special_keyboard_callback_fn callback;
+
+    iterator = list__get_iterator(
+        get_callbacks(SPECIAL_KEYBOARD_UP_CALLBACK)
+    );
+
+    callback = list_iterator__current(&iterator);
+    while (!list_iterator__ended(&iterator)) {
+        callback(
+            (special_key_code_t)(key),
+            (point2d_t){
+                .x = x,
+                .y = y
+            }
+        );
 
         callback = list_iterator__next(&iterator);
     }
