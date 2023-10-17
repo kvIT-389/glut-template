@@ -47,7 +47,7 @@ window_t *window__create(
 
     window->id = glutCreateWindow(title);
     window->size = size;
-    window->callbacks = vector__create(2);
+    window->callbacks = vector__create(CALLBACK_TYPES_NUMBER);
 
     if (windows == NULL) {
         windows = vector__create(0);

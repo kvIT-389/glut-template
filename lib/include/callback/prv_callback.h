@@ -17,13 +17,9 @@ extern "C" {
 
 
 /**
- * \brief Initiates callbacks for the current window.
- * 
- * \note This function called during `window__create(...)` call
- *       from `window.h` header, so you should not call it
- *       anywhere else.
+ * \brief Number of different callbacks.
  */
-void init_callbacks(void);
+#define CALLBACK_TYPES_NUMBER 2
 
 
 /**
@@ -33,6 +29,16 @@ typedef enum callback_code {
   DISPLAY_CALLBACK,
   RESIZE_CALLBACK,
 } callback_code_t;
+
+
+/**
+ * \brief Initiates callbacks for the current window.
+ * 
+ * \note This function called during `window__create(...)` call
+ *       from `window.h` header, so you should not call it
+ *       anywhere else.
+ */
+void init_callbacks(void);
 
 
 /**
