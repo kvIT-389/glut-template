@@ -50,22 +50,38 @@ void init_callbacks(void);
 
 
 /**
- * \brief Get callbacks list of the current window
- *        of the specific type.
- * 
- * \param callback_code \ref `callback_code_t` member.
- * \return List of specific callbacks of the current window
- *         if it exists, `NULL` otherwise.
- */
-list_t *get_callbacks(callback_code_t callback_code);
-
-/**
  * \brief Add current window callback of the specified type.
  * 
  * \param callback callback function to add.
  * \param callback_code \ref `callback_code_t` member.
  */
 void add_callback(void *callback, callback_code_t callback_code);
+
+
+/**
+ * \brief Gets callbacks list of the current window
+ *        of the specific type.
+ * 
+ * \param callback_code \ref `callback_code_t` member.
+ * 
+ * \return List of specific callbacks of the current window
+ *         if it exists, `NULL` otherwise.
+ */
+list_t *get_callbacks(
+  callback_code_t callback_code
+);
+
+/**
+ * \brief Gets iterator  of the current window callbacks
+ *        of the specific type.
+ * 
+ * \param callback_code \ref `callback_code_t` member.
+ * 
+ * \return Iterator of specific callbacks of the current window.
+ */
+list_iterator_t get_callbacks_iterator(
+  callback_code_t callback_code
+);
 
 
 /**

@@ -91,6 +91,11 @@ void init_callbacks(void) {
 }
 
 
+void add_callback(void *callback, callback_code_t callback_code) {
+    list__add(get_callbacks(callback_code), callback);
+}
+
+
 list_t *get_callbacks(callback_code_t callback_code) {
     return vector__at(
         get_current_window()->callbacks,
@@ -98,8 +103,10 @@ list_t *get_callbacks(callback_code_t callback_code) {
     );
 }
 
-void add_callback(void *callback, callback_code_t callback_code) {
-    list__add(get_callbacks(callback_code), callback);
+list_iterator_t get_callbacks_iterator(
+  callback_code_t callback_code
+) {
+    return list__get_iterator(get_callbacks(callback_code));
 }
 
 
@@ -107,9 +114,7 @@ void display_wrapper(void) {
     list_iterator_t iterator;
     display_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(DISPLAY_CALLBACK)
-    );
+    iterator = get_callbacks_iterator(DISPLAY_CALLBACK);
 
     callback = list_iterator__current(&iterator);
     while (!list_iterator__ended(&iterator)) {
@@ -125,9 +130,7 @@ void reshape_wrapper(int width, int height) {
     list_iterator_t iterator;
     resize_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(RESIZE_CALLBACK)
-    );
+    iterator = get_callbacks_iterator(RESIZE_CALLBACK);
 
     callback = list_iterator__current(&iterator);
     while (!list_iterator__ended(&iterator)) {
@@ -144,10 +147,9 @@ void mouse_wrapper(int button, int state, int x, int y) {
     list_iterator_t iterator;
     mouse_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(state == GLUT_DOWN ?
-                      MOUSE_DOWN_CALLBACK :
-                      MOUSE_UP_CALLBACK)
+    iterator = get_callbacks_iterator(
+        (state == GLUT_DOWN) ? MOUSE_DOWN_CALLBACK :
+                               MOUSE_UP_CALLBACK
     );
 
     callback = list_iterator__current(&iterator);
@@ -168,9 +170,7 @@ void motion_wrapper(int x, int y) {
     list_iterator_t iterator;
     motion_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(MOUSE_MOVE_CALLBACK)
-    );
+    iterator = get_callbacks_iterator(MOUSE_MOVE_CALLBACK);
 
     callback = list_iterator__current(&iterator);
     while (!list_iterator__ended(&iterator)) {
@@ -187,8 +187,8 @@ void passive_motion_wrapper(int x, int y) {
     list_iterator_t iterator;
     motion_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(MOUSE_PASSIVE_MOVE_CALLBACK)
+    iterator = get_callbacks_iterator(
+        MOUSE_PASSIVE_MOVE_CALLBACK
     );
 
     callback = list_iterator__current(&iterator);
@@ -206,9 +206,7 @@ void keyboard_wrapper(unsigned char key, int x, int y) {
     list_iterator_t iterator;
     keyboard_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(KEYBOARD_DOWN_CALLBACK)
-    );
+    iterator = get_callbacks_iterator(KEYBOARD_DOWN_CALLBACK);
 
     callback = list_iterator__current(&iterator);
     while (!list_iterator__ended(&iterator)) {
@@ -228,9 +226,7 @@ void keyboard_up_wrapper(unsigned char key, int x, int y) {
     list_iterator_t iterator;
     keyboard_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(KEYBOARD_UP_CALLBACK)
-    );
+    iterator = get_callbacks_iterator(KEYBOARD_UP_CALLBACK);
 
     callback = list_iterator__current(&iterator);
     while (!list_iterator__ended(&iterator)) {
@@ -250,8 +246,8 @@ void special_wrapper(int key, int x, int y) {
     list_iterator_t iterator;
     special_keyboard_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(SPECIAL_KEYBOARD_DOWN_CALLBACK)
+    iterator = get_callbacks_iterator(
+        SPECIAL_KEYBOARD_DOWN_CALLBACK
     );
 
     callback = list_iterator__current(&iterator);
@@ -272,8 +268,8 @@ void special_up_wrapper(int key, int x, int y) {
     list_iterator_t iterator;
     special_keyboard_callback_fn callback;
 
-    iterator = list__get_iterator(
-        get_callbacks(SPECIAL_KEYBOARD_UP_CALLBACK)
+    iterator = get_callbacks_iterator(
+        SPECIAL_KEYBOARD_UP_CALLBACK
     );
 
     callback = list_iterator__current(&iterator);
