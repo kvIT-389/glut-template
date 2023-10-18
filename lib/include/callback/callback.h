@@ -26,6 +26,9 @@ typedef enum mouse_button_code {
 } mouse_button_code_t;
 
 
+/**
+ * \brief Special keyboard keys enumeration.
+ */
 typedef enum special_key_code {
   KEY_F1 = GLUT_KEY_F1,
   KEY_F2 = GLUT_KEY_F2,
