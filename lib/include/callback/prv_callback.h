@@ -7,7 +7,7 @@
 #ifndef PRV_CALLBACK_H_INCLUDED_
 #define PRV_CALLBACK_H_INCLUDED_
 
-#include "ccollections/list.h"
+#include "ccl/list.h"
 
 #include "geometry/size.h"
 
@@ -72,7 +72,7 @@ list_t *get_callbacks(
 );
 
 /**
- * \brief Gets iterator  of the current window callbacks
+ * \brief Gets iterator of the current window callbacks
  *        of the specific type.
  * 
  * \param callback_code \ref `callback_code_t` member.
@@ -113,7 +113,7 @@ void clear_frame(void);
  * \brief Resize callback which updates size of current
  *        window and OpenGL viewport.
  */
-void update_size(size2d_t size);
+void update_size(const size2d_t size);
 
 
 #ifdef __cplusplus

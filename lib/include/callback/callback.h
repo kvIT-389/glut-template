@@ -55,16 +55,18 @@ typedef enum special_key_code {
 
 
 typedef void (*display_callback_fn)(void);
-typedef void (*resize_callback_fn)(size2d_t);
+typedef void (*resize_callback_fn)(const size2d_t);
 
 typedef void (*mouse_callback_fn)(
-  mouse_button_code_t, point2d_t
+  const mouse_button_code_t, const point2d_t
 );
-typedef void (*motion_callback_fn)(point2d_t);
+typedef void (*motion_callback_fn)(const point2d_t);
 
-typedef void (*keyboard_callback_fn)(uint8_t, point2d_t);
+typedef void (*keyboard_callback_fn)(
+  const uint8_t, const point2d_t
+);
 typedef void (*special_keyboard_callback_fn)(
-  special_key_code_t, point2d_t
+  const special_key_code_t, const point2d_t
 );
 
 
@@ -73,6 +75,8 @@ typedef void (*special_keyboard_callback_fn)(
  *        called when current window needs to be redisplayed.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_display_callback(
   display_callback_fn callback
@@ -83,6 +87,8 @@ void add_display_callback(
  *        called when current window was resized.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_resize_callback(
   resize_callback_fn callback
@@ -93,6 +99,8 @@ void add_resize_callback(
  *        called when one of mouse buttons was pressed.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_mouse_down_callback(
   mouse_callback_fn callback
@@ -103,6 +111,8 @@ void add_mouse_down_callback(
  *        called when one of mouse buttons was released.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_mouse_up_callback(
   mouse_callback_fn callback
@@ -114,6 +124,8 @@ void add_mouse_up_callback(
  *        while one or more mouse buttons are pressed.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_mouse_move_callback(
   motion_callback_fn callback
@@ -125,6 +137,8 @@ void add_mouse_move_callback(
  *        while no mouse buttons are pressed.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_passive_mouse_move_callback(
   motion_callback_fn callback
@@ -136,6 +150,8 @@ void add_passive_mouse_move_callback(
  *        was pressed.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_keyboard_down_callback(
   keyboard_callback_fn callback
@@ -147,6 +163,8 @@ void add_keyboard_down_callback(
  *        was released.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_keyboard_up_callback(
   keyboard_callback_fn callback
@@ -157,6 +175,8 @@ void add_keyboard_up_callback(
  *        called when keyboard special key was pressed.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_special_keyboard_down_callback(
   special_keyboard_callback_fn callback
@@ -167,6 +187,8 @@ void add_special_keyboard_down_callback(
  *        called when keyboard special key was released.
  * 
  * \param callback callback function to add.
+ * 
+ * \note If `callback` is equal to `NULL`, does nothing.
  */
 void add_special_keyboard_up_callback(
   special_keyboard_callback_fn callback

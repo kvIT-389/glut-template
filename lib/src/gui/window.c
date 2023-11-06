@@ -10,8 +10,8 @@
 
 #include <GL/glut.h>
 
-#include "ccollections/vector.h"
-#include "ccollections/list.h"
+#include "ccl/vector.h"
+#include "ccl/list.h"
 
 #include "geometry/size.h"
 #include "geometry/point.h"
@@ -35,28 +35,39 @@ window_t *get_current_window(void) {
 
 window_t *window__create(
     const char *title,
-    size2d_t size,
-    point2d_t position
+    const size2d_t size,
+    const point2d_t position
 ) {
-    window_t *window;
+    /* Iterator of new window callbacks lists. */
+    vector_iterator_t it;
 
-    window = malloc(sizeof(window_t *));
+    /* New window pointer. */
+    window_t *window;
 
     glutInitWindowSize(size.w, size.h);
     glutInitWindowPosition(position.x, position.y);
 
-    window->id = glutCreateWindow(title);
-    window->size = size;
-    window->callbacks = vector__create(CALLBACK_TYPES_NUMBER);
+    window = malloc(sizeof(window_t));
+
+    *window = (window_t){
+        .id = glutCreateWindow(title),
+        .size = size,
+        .callbacks = vector__create(CALLBACK_TYPES_NUMBER)
+    };
 
     if (windows == NULL) {
-        windows = vector__create(0);
+        windows = vector__create(1);
+
+        vector__set(windows, 0, NULL);
     }
 
     vector__set(windows, window->id, window);
 
-    for (int i = 0; i < window->callbacks->size; ++i) {
-        vector__set(window->callbacks, i, list__create());
+    it = vector__begin(window->callbacks);
+    while (!vector_iterator__ended(&it)) {
+        vector_iterator__set(&it, list__create());
+
+        vector_iterator__next(&it);
     }
 
     init_callbacks();
@@ -68,7 +79,8 @@ window_t *window__create(
 }
 
 void window__destroy(window_t *window) {
-    vector_iterator_t iterator;
+    /* Iterator of `window` callbacks lists. */
+    vector_iterator_t it;
 
     if (window == NULL || window->id == 0) {
         return;
@@ -76,9 +88,14 @@ void window__destroy(window_t *window) {
 
     glutDestroyWindow(window->id);
 
-    for (int i = 0; i < window->callbacks->size; ++i) {
-        list__free(vector__at(window->callbacks, i));
+    it = vector__begin(window->callbacks);
+    while (!vector_iterator__ended(&it)) {
+        list__free(vector_iterator__get(&it));
+
+        vector_iterator__next(&it);
     }
+
+    vector__free(window->callbacks);
 
     free(window);
 }

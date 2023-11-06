@@ -12,7 +12,7 @@
 #include "geometry/size.h"
 #include "geometry/point.h"
 
-#include "ccollections/vector.h"
+#include "ccl/vector.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,8 +68,8 @@ window_t *get_current_window(void);
  */
 window_t *window__create(
   const char *title,
-  size2d_t size,
-  point2d_t position
+  const size2d_t size,
+  const point2d_t position
 );
 
 /**
