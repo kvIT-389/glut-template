@@ -1,6 +1,6 @@
 /**
  * \file timer.c
- * \brief timer source file.
+ * \brief Contains timer functions implementation.
  */
 
 #include "callback/timer.h"

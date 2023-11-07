@@ -1,6 +1,6 @@
 /**
  * \file prv_timer.h
- * \brief prv_timer header file.
+ * \brief Contains private timer-related functions declarations.
  */
 
 #ifndef PRV_TIMER_H_INCLUDED_

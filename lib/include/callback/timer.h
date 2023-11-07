@@ -1,6 +1,6 @@
 /**
  * \file timer.h
- * \brief timer header file.
+ * \brief Contains timer structure and functions declaration.
  */
 
 #ifndef TIMER_H_INCLUDED_
